@@ -25,9 +25,14 @@ module AskChatgpt
         when ::Proc, ::Method, ::UnboundMethod
           "Method source\n: #{method.source}"
         when Module, Class, String
-          capture_io do
+          str = capture_io do
             IRB.CurrentContext.main.irb_show_source(method.to_s)
           end.join("\n")
+          if str.include?("locate a definition for")
+            method.to_s
+          else
+            str
+          end
         else
           raise "Not supported parameter, pass a Method object (example: method(:foo)))"
         end
