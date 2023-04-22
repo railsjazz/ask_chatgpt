@@ -1,0 +1,8 @@
+Description:
+    Generate configuration file.
+
+Example:
+    rails generate ask_chatgpt initializer
+
+    This will create:
+        config/ask_chatgpt.rb

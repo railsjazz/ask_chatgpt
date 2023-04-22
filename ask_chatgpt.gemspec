@@ -21,4 +21,5 @@ Gem::Specification.new do |spec|
   spec.add_dependency "tty-markdown"
   spec.add_dependency "tty-spinner"
   spec.add_development_dependency 'wrapped_print'
+  spec.add_development_dependency 'pry'
 end

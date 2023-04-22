@@ -19,10 +19,15 @@ module AskChatgpt
 
   # https://platform.openai.com/docs/api-reference/completions/create#completions/create-temperature
   mattr_accessor :temperature
-  @@temperature = 0.2
+  @@temperature = 0.1
 
+  # use your own API key (local per set in initializer or ENV)
   mattr_accessor :access_token
   @@access_token = ENV["OPENAI_API_KEY"]
+
+  def self.setup
+    yield(self)
+  end
 
   module ConsoleMethods
     def gpt

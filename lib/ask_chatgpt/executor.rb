@@ -1,7 +1,11 @@
 require_relative "prompts/base"
+require_relative "prompts/improve"
 Dir[File.join(__dir__, "prompts", "*.rb")].each do |file|
   require file
 end
+
+# for inspiration:
+# https://www.greataiprompts.com/chat-gpt/best-coding-prompts-for-chat-gpt/
 
 module AskChatgpt
   class Executor
@@ -19,20 +23,16 @@ module AskChatgpt
       self
     end
 
-    def improve(method)
-      @scope << AskChatGPT::Prompts::Improve.new(method)
-      self
+    [:improve, :refactor, :question, :find_bug, :code_review, :rspec_test, :unit_test].each do |method|
+      define_method(method) do |*args|
+        @scope << AskChatGPT::Prompts.const_get(method.to_s.camelize).new(*args)
+        self
+      end
     end
 
-    def refactor(method)
-      @scope << AskChatGPT::Prompts::Refactor.new(method)
-      self
-    end
-
-    def ask(question)
-      @scope << AskChatGPT::Prompts::Question.new(question)
-      self
-    end
+    alias :ask :question
+    alias :how :question
+    alias :review :code_review
 
     def inspect
       puts(call); nil
@@ -50,6 +50,8 @@ module AskChatgpt
 
       parsed = TTY::Markdown.parse(content)
       parsed
+    ensure
+      spinner.stop if spinner.spinning?
     end
 
     def parameters
