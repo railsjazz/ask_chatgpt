@@ -28,9 +28,16 @@ Go to Rails console and run:
 
 ## Examples
 
+Ask for code ideas:
 ![AskChatGPT](docs/gpt1.png)
+
+Do you need help to write rspec test?
 ![AskChatGPT](docs/gpt2.png)
+
+What about unit tests?
 ![AskChatGPT](docs/gpt3.png)
+
+Ask ChatGPT to improve your code:
 ![AskChatGPT](docs/gpt4.png)
 
 ## Installation
