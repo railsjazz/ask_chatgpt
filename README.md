@@ -58,7 +58,7 @@ Or install it yourself as:
 $ gem install ask_chatgpt
 ```
 
-## Options
+## Options & Configurations
 
 Run `rails g ask_chatgpt initializer`.
 
@@ -72,6 +72,8 @@ And you can edit:
     # config.temperature = 0.1
   end
 ```
+
+Note: that you need to setup your API Key https://platform.openai.com/account/api-keys. You can store it in the .env or .bash_profile. BUT make sure it won't be committed to the Github. Is must be private.
 
 ## TODO
 
