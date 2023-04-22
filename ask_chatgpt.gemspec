@@ -18,6 +18,7 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency "rails"
   spec.add_dependency "ruby-openai"
-  spec.add_dependency 'tty-markdown'
+  spec.add_dependency "tty-markdown"
+  spec.add_dependency "tty-spinner"
   spec.add_development_dependency 'wrapped_print'
 end
