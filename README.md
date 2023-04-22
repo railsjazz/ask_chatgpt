@@ -5,7 +5,11 @@
 
 AI-Powered Assistant Gem right in your Rails console.
 
+![AskChatGPT](docs/gpt.gif)
+
 Gem that harnesses the power of AI to make your development experience more efficient and enjoyable. With this gem, you can streamline your coding process, effortlessly refactor and improve your code, and even generate tests on the fly.
+
+You are welcome to ajust current prompts and propose new!
 
 ## Usage
 
@@ -21,6 +25,13 @@ Go to Rails console and run:
   gpt.code_review(User.method(:get_report))
   gpt.find_bug('User.full_name')
 ```
+
+## Examples
+
+![AskChatGPT](docs/gpt1.png)
+![AskChatGPT](docs/gpt2.png)
+![AskChatGPT](docs/gpt3.png)
+![AskChatGPT](docs/gpt4.png)
 
 ## Installation
 
@@ -61,6 +72,8 @@ And you can edit:
 - more prompts (cover controllers, sql, etc?)
 - tests
 - can it be used with pry/byebug/etc?
+- print tokens usage?
+- support org_id?
 
 ## Contributing
 
