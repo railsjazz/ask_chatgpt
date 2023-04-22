@@ -1,6 +1,11 @@
-# AskChatgpt
+# AskChatGPT
 
-Short description and motivation.
+[![RailsJazz](https://github.com/igorkasyanchuk/rails_time_travel/blob/main/docs/my_other.svg?raw=true)](https://www.railsjazz.com)
+[![Listed on OpenSource-Heroes.com](https://opensource-heroes.com/badge-v1.svg)](https://opensource-heroes.com/o/railsjazz)
+
+AI-Powered Assistant Gem right in your Rails console.
+
+Gem that harnesses the power of AI to make your development experience more efficient and enjoyable. With this gem, you can streamline your coding process, effortlessly refactor and improve your code, and even generate tests on the fly.
 
 ## Usage
 
@@ -53,8 +58,9 @@ And you can edit:
 ## TODO
 
 - cli app?
-- more prompts
+- more prompts (cover controllers, sql, etc?)
 - tests
+- can it be used with pry/byebug/etc?
 
 ## Contributing
 
