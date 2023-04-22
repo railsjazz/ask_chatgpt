@@ -23,6 +23,8 @@ module AskChatgpt
       self
     end
 
+    alias :with_models :with_model
+
     [:improve, :refactor, :question, :find_bug, :code_review, :rspec_test, :unit_test].each do |method|
       define_method(method) do |*args|
         @scope << AskChatGPT::Prompts.const_get(method.to_s.camelize).new(*args)
@@ -32,6 +34,7 @@ module AskChatgpt
 
     alias :ask :question
     alias :how :question
+    alias :find :question
     alias :review :code_review
 
     def inspect
@@ -40,6 +43,8 @@ module AskChatgpt
 
     def call
       pp parameters if AskChatGPT.debug
+
+      return puts("No prompts given") if scope.size == 1 # only App prompt
 
       spinner = TTY::Spinner.new(format: :classic)
       spinner.auto_spin

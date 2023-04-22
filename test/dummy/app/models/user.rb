@@ -4,7 +4,7 @@ class User < ApplicationRecord
   attr_accessor :first_name, :last_name
 
   belongs_to :country
-  has_many :projects
+  has_many :projects, foreign_key: :author_id
 
   # bad code on purpose
   def self.get_report

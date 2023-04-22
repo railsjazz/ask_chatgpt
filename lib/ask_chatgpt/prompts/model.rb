@@ -12,7 +12,8 @@ module AskChatgpt
           summary_info,
           schema_info,
           associations_info,
-        ].compact_blank.join("\n")
+          instructions_info
+        ].compact_blank.join("\n\n")
       end
 
       private
@@ -22,17 +23,24 @@ module AskChatgpt
       end
 
       def schema_info
-        "Schema: \n" +
+        "Schema: #{model.table_name}\n" +
         model.columns.map do |column|
           "#{column.name}: #{column.type}"
         end.join("\n")
       end
 
       def associations_info
-        "Associations: \n" +
+        "#{model.name} Associations and Relations: \n" +
         model.reflections.map do |name, reflection|
-          "#{name}: #{reflection.class}"
+          [
+            "#{reflection.macro} :#{name}",
+            reflection.options.inject("") { |h, (k, v)| h += "#{k}: #{v}" }
+          ].join(', ')
         end.join("\n")
+      end
+
+      def instructions_info
+        "Use relations and associations, pay attention to the foreign keys. Read models and their associations."
       end
     end
   end
