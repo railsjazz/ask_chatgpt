@@ -6,8 +6,8 @@ Gem::Specification.new do |spec|
   spec.authors     = ["Igor Kasyanchuk", "Liubomyr Manastyretskyi"]
   spec.email       = ["igorkasyanchuk@gmail.com", "manastyretskyi@gmail.com"]
   spec.homepage    = "https://github.com/railsjazz.com/ask_chatgpt"
-  spec.summary     = "Summary of AskChatgpt."
-  spec.description = "Description of AskChatgpt."
+  spec.summary     = "AI-Powered Assistant Gem right in your Rails console."
+  spec.description = "AI-Powered Assistant Gem right in your Rails console."
   spec.license     = "MIT"
 
   spec.metadata["homepage_uri"] = spec.homepage
