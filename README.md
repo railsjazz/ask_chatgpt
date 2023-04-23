@@ -18,6 +18,7 @@ Go to Rails console and run:
 ```ruby
   gpt.ask("how to get max age of user with projects from Ukraine").with_model(User, Project, Country)
   gpt.ask("convert json to xml")
+  gpt.payload(json).ask("extract emails from json")
   gpt.refactor("User.get_report")
   gpt.improve("User.get_report")
   gpt.rspec_test(User)
@@ -31,6 +32,8 @@ Go to Rails console and run:
     end
   }
 ```
+
+See some examples below. You can also create your own prompts with just few lines of code [here](#options--configurations).
 
 ## Examples
 
