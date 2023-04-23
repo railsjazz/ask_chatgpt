@@ -120,11 +120,11 @@ If you want to get source code use this helper `AskChatGPT::Helpers.extract_sour
 You can pass:
 
 ```ruby
-  extract_source('User.some_class_method')
-  extract_source('User#instance_method')
-  extract_source('User')
-  extract_source(User)
-  extract_source("a = 42")
+  AskChatGPT::Helpers.extract_source('User.some_class_method')
+  AskChatGPT::Helpers.extract_source('User#instance_method')
+  AskChatGPT::Helpers.extract_source('User')
+  AskChatGPT::Helpers.extract_source(User)
+  AskChatGPT::Helpers.extract_source("a = b")
 ```
 
 ## Debug Mode
