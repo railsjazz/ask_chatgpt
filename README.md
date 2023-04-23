@@ -25,9 +25,17 @@ Go to Rails console and run:
   gpt.code_review(User.method(:get_report))
   gpt.find_bug('User#full_name')
   gpt.explain(User)
+  gpt.improve %Q{
+    def full_name
+      [first_name, last_name].join
+    end
+  }
 ```
 
 ## Examples
+
+Typical use-cases how you can use this plugin
+![AskChatGPT](docs/gpt6.png)
 
 Ask for code ideas:
 ![AskChatGPT](docs/gpt1.png)
@@ -40,6 +48,9 @@ What about unit tests?
 
 Ask ChatGPT to improve your code:
 ![AskChatGPT](docs/gpt4.png)
+
+Create I18n YAML for your Model (custom prompt):
+![AskChatGPT](docs/gpt5.png)
 
 ## Installation
 
@@ -93,7 +104,18 @@ And you can edit:
 
 Note: that you need to setup your API Key https://platform.openai.com/account/api-keys. You can store it in the .env or .bash_profile. BUT make sure it won't be committed to the Github. Is must be private.
 
-You can define you own prompts and use them. If you want to get source code use this helper `AskChatGPT::Helpers.extract_source(str)`.
+You can define you own prompts and use them using `.register_prompt`. For example:
+
+```ruby
+  config.register_prompt :extract_email do |arg|
+    "Extract email from: #{arg} as JSON"
+  end
+```
+
+And later you can call it with `gpt.extract_email("some text with email@site.com, user@email.com")`.
+If you believe your custom promts will be useful - create a PR for this gem.
+
+If you want to get source code use this helper `AskChatGPT::Helpers.extract_source(str)`.
 
 You can pass:
 
@@ -107,12 +129,12 @@ You can pass:
 
 ## TODO
 
-- cli app?
-- more prompts (cover controllers, sql, etc?)
-- tests
+- cli app? `ask_gpt <something> --file <file>` ...
+- more prompts (cover controllers, sql, etc?), e.g. `with_controller`, `with_class`, ...
+- tests(rspec, vcr)
 - can it be used with pry/byebug/etc?
-- print tokens usage?
-- support org_id?
+- print tokens usage? `.with_usage`
+- support org_id? in the configs
 - use `gpt` in the code of the main app (e.g. model/controller)
 
 ## Contributing
