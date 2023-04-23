@@ -2,7 +2,7 @@ AskChatGPT.setup do |config|
   # config.access_token    = ENV["OPENAI_API_KEY"]
   # config.debug           = false
   # config.model           = "gpt-3.5-turbo"
-  # config.max_tokens      = 4000
+  # config.max_tokens      = 3000 # or nil by default
   # config.temperature     = 0.1
   # config.included_prompt = []
 

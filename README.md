@@ -71,7 +71,7 @@ And you can edit:
     # config.debug           = false
     # config.model           = "gpt-3.5-turbo"
     # config.temperature     = 0.1
-    # config.max_tokens      = 4000
+    # config.max_tokens      = 3000 # or nil by default
     # config.included_prompt = []
 
     # Examples of custom prompts:

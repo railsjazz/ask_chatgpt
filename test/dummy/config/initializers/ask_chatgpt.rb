@@ -3,7 +3,7 @@ AskChatGPT.setup do |config|
   config.debug = false
   # config.model = "gpt-3.5-turbo"
   # config.temperature = 0.1
-  # config.max_tokens = 4000
+  config.max_tokens = 3000
   config.included_prompt = []
 
   config.register_prompt :extract_email do |arg|

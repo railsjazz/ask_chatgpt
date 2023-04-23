@@ -25,8 +25,9 @@ module AskChatgpt
   mattr_accessor :temperature
   @@temperature = 0.1
 
+  # default max tokens will be defined by the model
   mattr_accessor :max_tokens
-  @@max_tokens = 4000
+  @@max_tokens = nil
 
   # use your own API key (local per set in initializer or ENV)
   mattr_accessor :access_token

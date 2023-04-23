@@ -49,13 +49,18 @@ module AskChatgpt
 
       spinner = TTY::Spinner.new(format: :classic)
       spinner.auto_spin
-
       response = client.chat(parameters: parameters)
-      content = response.dig("choices", 0, "message", "content")
       spinner.stop
 
-      parsed = TTY::Markdown.parse(content)
-      parsed
+      pp response if AskChatGPT.debug
+
+      if response["error"]
+        puts response["error"]["message"]
+      else
+        content = response.dig("choices", 0, "message", "content")
+        parsed = TTY::Markdown.parse(content)
+        parsed
+      end
     ensure
       spinner.stop if spinner.spinning?
     end
@@ -66,7 +71,7 @@ module AskChatgpt
         temperature: AskChatGPT.temperature,
         max_tokens: AskChatGPT.max_tokens,
         messages: scope.map { |e| { role: "user", content: e.content } },
-      }
+      }.compact_blank
     end
   end
 end
