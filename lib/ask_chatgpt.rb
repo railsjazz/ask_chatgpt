@@ -6,10 +6,14 @@ require "openai"
 require "tty-markdown"
 require "tty-spinner"
 
+require_relative "ask_chatgpt/console"
 require_relative "ask_chatgpt/executor"
+require_relative "ask_chatgpt/helpers"
 require_relative "ask_chatgpt/core"
 
 module AskChatgpt
+  ::AskChatGPT = AskChatgpt
+
   mattr_accessor :debug
   @@debug = false
 
@@ -21,28 +25,32 @@ module AskChatgpt
   mattr_accessor :temperature
   @@temperature = 0.1
 
+  # default max tokens will be defined by the model
+  mattr_accessor :max_tokens
+  @@max_tokens = nil
+
   # use your own API key (local per set in initializer or ENV)
   mattr_accessor :access_token
   @@access_token = ENV["OPENAI_API_KEY"]
+
+  # this prompt is always included
+  # it constain info that you have Rails app and Rails/Ruby versions, and DB adapter name
+  mattr_accessor :included_prompt
+  @@included_prompt = [AskChatGPT::Prompts::App.new]
 
   def self.setup
     yield(self)
   end
 
-  module ConsoleMethods
-    def gpt
-      AskChatGPT::Core.call
-    end
-
-    alias :chatgpt :gpt
-    alias :chat_gpt :gpt
-
-    def run(*args)
-      gpt(*args)
+  def self.register_prompt(name, &block)
+    # i want to create a module and include it into a class, with method name and code from block
+    AskChatGPT::Executor.class_eval do
+      define_method(name) do |*args|
+        @scope << AskChatGPT::Prompts::Custom.new(*args, block)
+        self
+      end
     end
   end
 
-  extend ConsoleMethods
+  extend AskChatGPT::Console
 end
-
-AskChatGPT = AskChatgpt
