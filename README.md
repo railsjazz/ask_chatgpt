@@ -132,6 +132,7 @@ You can pass:
 - cli app? `ask_gpt <something> --file <file>` ...
 - more prompts (cover controllers, sql, etc?), e.g. `with_controller`, `with_class`, ...
 - tests(rspec, vcr)
+- CI (but first specs)
 - can it be used with pry/byebug/etc?
 - print tokens usage? `.with_usage`
 - support org_id? in the configs
