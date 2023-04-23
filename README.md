@@ -127,6 +127,18 @@ You can pass:
   extract_source("a = 42")
 ```
 
+## Debug Mode
+
+You can enable debug mode to see request/response from the OpenAI using two ways:
+
+```ruby
+AskChatGPT.setup do |config|
+  config.debug = false
+end
+```
+
+or directly in console `gpt.debug!` (and finish `gpt.debug!(:off)`)
+
 ## TODO
 
 - cli app? `ask_gpt <something> --file <file>` ...

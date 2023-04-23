@@ -13,7 +13,7 @@ module AskChatgpt
       private
 
       def summary_info
-        "Model: #{record.name}, table name: #{record.table_name}"
+        "Active Record Model: #{record.name}, table name: #{record.table_name}"
       end
 
       def schema_info

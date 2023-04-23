@@ -9,6 +9,8 @@ end
 
 module AskChatgpt
   class Executor
+    DEFAULT_PROMPTS = [:improve, :refactor, :question, :find_bug, :code_review, :rspec_test, :unit_test, :explain]
+
     attr_reader :scope, :client
 
     def initialize(client)
@@ -16,30 +18,38 @@ module AskChatgpt
       @client = client
     end
 
-    def with_model(*models)
-      models.each do |model|
-        @scope << AskChatGPT::Prompts::Model.new(model)
-      end
-      self
+    def debug!(mode = :on)
+      AskChatGPT.debug = mode == :on
     end
 
+    def with_model(*models)
+      self.tap do
+        models.each do |model|
+          add_prompt AskChatGPT::Prompts::Model.new(model)
+        end
+      end
+    end
     alias :with_models :with_model
 
-    [:improve, :refactor, :question, :find_bug, :code_review, :rspec_test, :unit_test, :explain].each do |method|
+    DEFAULT_PROMPTS.each do |method|
       define_method(method) do |*args|
-        @scope << AskChatGPT::Prompts.const_get(method.to_s.camelize).new(*args)
-        self
+        add_prompt(AskChatGPT::Prompts.const_get(method.to_s.camelize).new(*args))
       end
     end
-
     alias :ask :question
+    alias :payload :question
     alias :how :question
     alias :find :question
     alias :review :code_review
 
     def inspect
-      pp parameters if AskChatGPT.debug
+      pp(executor_parameters) if AskChatGPT.debug
       puts(call); nil
+      1/0
+    rescue StandardError => e
+      puts e.message
+      puts e.backtrace.take(5).join("\n")
+      nil
     end
 
     def call
@@ -49,10 +59,10 @@ module AskChatgpt
 
       spinner = TTY::Spinner.new(format: :classic)
       spinner.auto_spin
-      response = client.chat(parameters: parameters)
+      response = client.chat(parameters: executor_parameters)
       spinner.stop
 
-      pp response if AskChatGPT.debug
+      pp(response) if AskChatGPT.debug
 
       if response["error"]
         puts response["error"]["message"]
@@ -65,13 +75,19 @@ module AskChatgpt
       spinner.stop if spinner.spinning?
     end
 
-    def parameters
-      @parameters ||= {
+    def executor_parameters
+      @executor_parameters ||= {
         model: AskChatGPT.model,
         temperature: AskChatGPT.temperature,
         max_tokens: AskChatGPT.max_tokens,
         messages: scope.map { |e| { role: "user", content: e.content } },
       }.compact_blank
     end
+
+    def add_prompt(prompt)
+      @scope << prompt
+      self
+    end
+
   end
 end
