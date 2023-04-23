@@ -3,6 +3,9 @@
 class User < ApplicationRecord
   attr_accessor :first_name, :last_name
 
+  STATUS_ACTIVE   = "active"
+  STATUS_INACTIVE = "in_active"
+
   belongs_to :country
   has_many :projects, foreign_key: :author_id
 
@@ -19,5 +22,9 @@ class User < ApplicationRecord
 
   def full_name
     [first_name, last_name].join
+  end
+
+  def say_hello
+    "Hello, #{full_name}!"
   end
 end

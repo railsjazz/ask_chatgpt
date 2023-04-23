@@ -16,12 +16,12 @@ module AskChatgpt
       end
 
       def database_info
-        db_name = ActiveRecord::Base.connection_db_config.configuration_hash[:database] rescue nil
+        db_name = ActiveRecord::Base.connection_db_config.configuration_hash[:adapter] rescue nil
         "Database: #{db_name}" if db_name
       end
 
       def version_info
-        "Version #{Rails.version}, Ruby Version: #{RUBY_VERSION}"
+        "Rails Version #{Rails.version}, Ruby Version: #{RUBY_VERSION}"
       end
     end
   end

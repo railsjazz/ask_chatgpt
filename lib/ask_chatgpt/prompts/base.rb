@@ -1,14 +1,14 @@
 module AskChatgpt
   module Prompts
     class Base
-      attr_reader :str
+      attr_reader :record
 
-      def initialize(str = nil)
-        @str = str
+      def initialize(record = nil)
+        @record = record
       end
 
       def content
-        str
+        record
       end
     end
   end

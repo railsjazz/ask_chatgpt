@@ -1,12 +1,6 @@
 module AskChatgpt
   module Prompts
     class Model < Base
-      attr_reader :model
-
-      def initialize(model)
-        @model = model
-      end
-
       def content
         [
           summary_info,
@@ -19,19 +13,19 @@ module AskChatgpt
       private
 
       def summary_info
-        "Model: #{model.name}, table name: #{model.table_name}"
+        "Model: #{record.name}, table name: #{record.table_name}"
       end
 
       def schema_info
-        "Schema: #{model.table_name}\n" +
-        model.columns.map do |column|
+        "Schema: #{record.table_name}\n" +
+        record.columns.map do |column|
           "#{column.name}: #{column.type}"
         end.join("\n")
       end
 
       def associations_info
-        "#{model.name} Associations and Relations: \n" +
-        model.reflections.map do |name, reflection|
+        "#{record.name} Associations and Relations: \n" +
+        record.reflections.map do |name, reflection|
           [
             "#{reflection.macro} :#{name}",
             reflection.options.inject("") { |h, (k, v)| h += "#{k}: #{v}" }

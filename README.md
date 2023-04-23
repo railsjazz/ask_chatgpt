@@ -23,7 +23,8 @@ Go to Rails console and run:
   gpt.rspec_test(User)
   gpt.unit_test(User)
   gpt.code_review(User.method(:get_report))
-  gpt.find_bug('User.full_name')
+  gpt.find_bug('User#full_name')
+  gpt.explain(User)
 ```
 
 ## Examples
@@ -66,11 +67,40 @@ And you can edit:
 
 ```ruby
   AskChatGPT.setup do |config|
-    # config.access_token = ENV["OPENAI_API_KEY"]
-    # config.debug = false
-    # config.model = "gpt-3.5-turbo"
-    # config.temperature = 0.1
+    # config.access_token    = ENV["OPENAI_API_KEY"]
+    # config.debug           = false
+    # config.model           = "gpt-3.5-turbo"
+    # config.temperature     = 0.1
+    # config.max_tokens      = 4000
+    # config.included_prompt = []
+
+    # Examples of custom prompts:
+    # you can use them `gpt.ask(:extract_email, "some string")`
+
+    # config.register_prompt :extract_email do |arg|
+    #   "Extract email from: #{arg} as JSON"
+    # end
+
+    # config.register_prompt :extract_constants do |arg|
+    #   "Extract constants from class: #{AskChatGPT::Helpers.extract_source(arg)}"
+    # end
+
+    # config.register_prompt :i18n do |code|
+    #   "Use I18n in this code:\n#{AskChatGPT::Helpers.extract_source(code)}"
+    # end
   end
+```
+
+You can define you own prompts and use them. If you want to get source code use this helper `AskChatGPT::Helpers.extract_source(str)`.
+
+You can pass:
+
+```ruby
+  extract_source('User.some_class_method')
+  extract_source('User#instance_method')
+  extract_source('User')
+  extract_source(User)
+  extract_source("a = 42")
 ```
 
 ## TODO
@@ -81,6 +111,7 @@ And you can edit:
 - can it be used with pry/byebug/etc?
 - print tokens usage?
 - support org_id?
+- use `gpt` in the code of the main app (e.g. model/controller)
 
 ## Contributing
 

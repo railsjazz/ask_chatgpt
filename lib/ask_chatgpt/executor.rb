@@ -12,7 +12,7 @@ module AskChatgpt
     attr_reader :scope, :client
 
     def initialize(client)
-      @scope = [AskChatGPT::Prompts::App.new]
+      @scope = AskChatGPT.included_prompt.dup
       @client = client
     end
 
@@ -25,7 +25,7 @@ module AskChatgpt
 
     alias :with_models :with_model
 
-    [:improve, :refactor, :question, :find_bug, :code_review, :rspec_test, :unit_test].each do |method|
+    [:improve, :refactor, :question, :find_bug, :code_review, :rspec_test, :unit_test, :explain].each do |method|
       define_method(method) do |*args|
         @scope << AskChatGPT::Prompts.const_get(method.to_s.camelize).new(*args)
         self
@@ -38,13 +38,14 @@ module AskChatgpt
     alias :review :code_review
 
     def inspect
+      pp parameters if AskChatGPT.debug
       puts(call); nil
     end
 
     def call
-      pp parameters if AskChatGPT.debug
-
-      return puts("No prompts given") if scope.size == 1 # only App prompt
+      if scope.empty? || (scope.size == 1 && scope.first.is_a?(AskChatGPT::Prompts::App))
+        return puts("No prompts given")
+      end
 
       spinner = TTY::Spinner.new(format: :classic)
       spinner.auto_spin
@@ -60,10 +61,11 @@ module AskChatgpt
     end
 
     def parameters
-      {
+      @parameters ||= {
         model: AskChatGPT.model,
-        messages: scope.map { |e| { role: "user", content: e.content } },
         temperature: AskChatGPT.temperature,
+        max_tokens: AskChatGPT.max_tokens,
+        messages: scope.map { |e| { role: "user", content: e.content } },
       }
     end
   end
