@@ -1,4 +1,4 @@
-# AskChatGPT
+# Ask ChatGPT
 
 [![RailsJazz](https://github.com/igorkasyanchuk/rails_time_travel/blob/main/docs/my_other.svg?raw=true)](https://www.railsjazz.com)
 [![Listed on OpenSource-Heroes.com](https://opensource-heroes.com/badge-v1.svg)](https://opensource-heroes.com/o/railsjazz)
@@ -9,7 +9,7 @@ AI-Powered Assistant Gem right in your Rails console.
 
 A Gem that leverages the power of AI to make your development experience more efficient and enjoyable. With this gem, you can streamline your coding process, effortlessly refactor and improve your code, and even generate tests on the fly.
 
-We are welcoming you to propose new prompts or adjust existing ones!
+See more [examples](#examples) below.
 
 ## Usage
 
@@ -161,7 +161,7 @@ or directly in console `gpt.debug!` (and finish `gpt.debug!(:off)`)
 
 ## Contributing
 
-You are welcome to contribute.
+We are welcoming you to propose new prompts or adjust existing ones!
 
 To start just clone this repo. Run bundle, and go to `cd test/dummy/`. Start `rails c` and test your prompts.
 
