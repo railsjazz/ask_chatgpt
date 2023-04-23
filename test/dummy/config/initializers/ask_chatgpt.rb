@@ -4,8 +4,8 @@ AskChatGPT.setup do |config|
   # config.model = "gpt-3.5-turbo"
   # config.temperature = 0.1
   config.max_tokens = 3000
-  # config.included_prompt = [AskChatGPT::Prompts::App.new]
-  config.included_prompt = []
+  config.included_prompt = [AskChatGPT::Prompts::App.new]
+  # config.included_prompt = []
 
   config.register_prompt :extract_email do |arg|
     "Extract email from: #{arg} as JSON"
