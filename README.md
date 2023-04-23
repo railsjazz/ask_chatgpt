@@ -154,6 +154,8 @@ or directly in console `gpt.debug!` (and finish `gpt.debug!(:off)`)
 
 You are welcome to contribute.
 
+To start just clone this repo. Run bundle, and go to `cd test/dummy/`. Start `rails c` and test your prompts.
+
 ## License
 
 The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).

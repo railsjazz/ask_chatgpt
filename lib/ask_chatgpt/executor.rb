@@ -45,7 +45,6 @@ module AskChatgpt
     def inspect
       pp(executor_parameters) if AskChatGPT.debug
       puts(call); nil
-      1/0
     rescue StandardError => e
       puts e.message
       puts e.backtrace.take(5).join("\n")
