@@ -49,6 +49,12 @@ What about unit tests?
 Ask ChatGPT to improve your code:
 ![AskChatGPT](docs/gpt4.png)
 
+Ask ChatGPT to parse you JSON:
+![AskChatGPT](docs/gpt7.png)
+
+Or it can encode in Base64 your string:
+![AskChatGPT](docs/gpt8.png)
+
 Create I18n YAML for your Model (custom prompt):
 ![AskChatGPT](docs/gpt5.png)
 
