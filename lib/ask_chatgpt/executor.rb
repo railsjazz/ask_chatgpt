@@ -71,7 +71,7 @@ module AskChatgpt
         parsed
       end
     ensure
-      spinner.stop if spinner.spinning?
+      spinner.stop if spinner&.spinning?
     end
 
     def executor_parameters

@@ -158,6 +158,7 @@ or directly in console `gpt.debug!` (and finish `gpt.debug!(:off)`)
 - print tokens usage? `.with_usage`
 - support org_id? in the configs
 - use `gpt` in the code of the main app (e.g. model/controller)
+- remove dependency on `ruby-openai` and just do a `Net::HTTP` call
 
 ## Contributing
 
