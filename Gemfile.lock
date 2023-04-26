@@ -2,7 +2,7 @@ PATH
   remote: .
   specs:
     ask_chatgpt (0.2.0)
-      irb (>= 1.4.0)
+      irb (>= 1.4.3)
       rails
       ruby-openai
       tty-markdown
