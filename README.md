@@ -91,6 +91,7 @@ And you can edit:
 
     # async mode will use OpenAI streamming feature and will return results as they come
     # config.mode            = :async # or :sync
+    # config.markdown        = true # try to convert response if Markdown
     # config.debug           = false
     # config.model           = "gpt-3.5-turbo"
     # config.temperature     = 0.1
@@ -147,6 +148,11 @@ You can enable debug mode to see request/response from the OpenAI using two ways
 AskChatGPT.setup do |config|
   config.debug = false
 end
+
+# or
+
+# gpt.on!(:debug)
+# gpt.off!(:debug)
 ```
 
 or directly in console `gpt.debug!` (and finish `gpt.debug!(:off)`)
@@ -158,6 +164,21 @@ Control the mode from a console. Or, from the initializer, using `config.mode = 
 ```ruby
   gpt.async!
   gpt.sync!
+```
+
+## Markdown
+
+Try to format response from Markdown and print nicely in the console.
+
+```ruby
+AskChatGPT.setup do |config|
+  config.markdown = true
+end
+
+# or
+
+# gpt.on!(:markdown)
+# gpt.off!(:markdown)
 ```
 
 ## TODO

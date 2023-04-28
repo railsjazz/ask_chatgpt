@@ -3,6 +3,7 @@ AskChatGPT.setup do |config|
 
   # async mode will use OpenAI streamming feature and will return results as they come
   # config.mode            = :async # or :sync
+  # config.markdown        = true # try to convert response if Markdown
   # config.debug           = false
   # config.model           = "gpt-3.5-turbo"
   # config.max_tokens      = 3000 # or nil by default

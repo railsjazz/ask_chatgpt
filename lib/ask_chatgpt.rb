@@ -19,6 +19,9 @@ module AskChatgpt
   mattr_accessor :mode
   @@mode = :async # or :sync
 
+  mattr_accessor :markdown
+  @@markdown = true
+
   mattr_accessor :debug
   @@debug = false
 

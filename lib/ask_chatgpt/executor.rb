@@ -1,5 +1,8 @@
+require_relative "sugar"
 require_relative "prompts/base"
 require_relative "prompts/improve"
+require_relative "default_behavior"
+
 Dir[File.join(__dir__, "prompts", "*.rb")].each do |file|
   require file
 end
@@ -11,7 +14,7 @@ module AskChatgpt
   class InputError < StandardError; end
 
   class Executor
-    DEFAULT_PROMPTS = [:improve, :refactor, :question, :find_bug, :code_review, :rspec_test, :unit_test, :explain]
+    include AskChatgpt::Sugar, AskChatgpt::DefaultBehavior
 
     attr_reader :scope, :client, :spinner, :cursor
 
@@ -21,38 +24,6 @@ module AskChatgpt
       @spinner = TTY::Spinner.new(format: :classic)
       @cursor  = TTY::Cursor
     end
-
-    def debug!(mode = :on)
-      AskChatGPT.debug = mode == :on
-    end
-
-    def sync!
-      AskChatGPT.mode = :sync
-    end
-
-    def async!
-      AskChatGPT.mode = :async
-    end
-
-    def with_model(*models)
-      self.tap do
-        models.each do |model|
-          add_prompt AskChatGPT::Prompts::Model.new(model)
-        end
-      end
-    end
-    alias :with_models :with_model
-
-    DEFAULT_PROMPTS.each do |method|
-      define_method(method) do |*args|
-        add_prompt(AskChatGPT::Prompts.const_get(method.to_s.camelize).new(*args))
-      end
-    end
-    alias :ask :question
-    alias :payload :question
-    alias :how :question
-    alias :find :question
-    alias :review :code_review
 
     def inspect
       pp(executor_parameters) if AskChatGPT.debug
@@ -73,19 +44,22 @@ module AskChatgpt
       nil
     end
 
+    private
+
     def call_with_validations
       if scope.empty? || (scope.size == 1 && scope.first.is_a?(AskChatGPT::Prompts::App))
         raise InputError, "No prompts given"
       end
+      print cursor.save
+      spinner.auto_spin
       yield
+    ensure
+      spinner.stop if spinner&.spinning?
     end
 
+    # we will collect all chunks and print them at once later with Markdown
     def call_async
-      # we will collect all chunks and print them at once later with Markdown
       content = []
-      print cursor.save
-
-      spinner.auto_spin
       response = client.chat(parameters: executor_parameters.merge({
         stream: proc do |chunk, _bytesize|
           spinner.stop if spinner&.spinning?
@@ -94,20 +68,22 @@ module AskChatgpt
           print content_part
         end
       }))
-
-      spinner&.stop
-
-      print cursor.restore
-      print cursor.down
-      print cursor.clear_screen_down
-      parsed = TTY::Markdown.parse(content.compact.join)
-      puts parsed
-    ensure
-      spinner.stop if spinner&.spinning?
+      if AskChatGPT.markdown
+        # re-draw the screen
+        # go back to the top by the number of new lines previously printed
+        print cursor.clear_lines(content.compact.join.split("\n").size + 1, :up)
+        # print cursor.restore
+        # print cursor.down
+        # print cursor.clear_screen_down
+        # $content = content.compact.join
+        puts(TTY::Markdown.parse(content.compact.join))
+      else
+        # nothing, content is already printed in the stream
+      end
     end
 
+    # wait for the whole response and print it at once
     def call_sync
-      spinner.auto_spin
       response = client.chat(parameters: executor_parameters)
       pp(response) if AskChatGPT.debug
       spinner&.stop
@@ -116,11 +92,12 @@ module AskChatgpt
         puts(response["error"]["message"])
       else
         content = response.dig("choices", 0, "message", "content")
-        parsed = TTY::Markdown.parse(content)
-        puts(parsed)
+        if AskChatGPT.markdown
+          puts(TTY::Markdown.parse(content))
+        else
+          puts(content)
+        end
       end
-    ensure
-      spinner.stop if spinner&.spinning?
     end
 
     def executor_parameters
@@ -130,11 +107,6 @@ module AskChatgpt
         max_tokens: AskChatGPT.max_tokens,
         messages: scope.map { |e| { role: "user", content: e.content } }.reject { |e| e[:content].blank? },
       }.compact_blank
-    end
-
-    def add_prompt(prompt)
-      scope << prompt
-      self
     end
   end
 end
