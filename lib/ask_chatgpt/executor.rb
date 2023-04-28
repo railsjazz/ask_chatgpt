@@ -8,18 +8,30 @@ end
 # https://www.greataiprompts.com/chat-gpt/best-coding-prompts-for-chat-gpt/
 
 module AskChatgpt
+  class InputError < StandardError; end
+
   class Executor
     DEFAULT_PROMPTS = [:improve, :refactor, :question, :find_bug, :code_review, :rspec_test, :unit_test, :explain]
 
-    attr_reader :scope, :client
+    attr_reader :scope, :client, :spinner, :cursor
 
     def initialize(client)
-      @scope = AskChatGPT.included_prompt.dup
-      @client = client
+      @scope   = AskChatGPT.included_prompt.dup
+      @client  = client
+      @spinner = TTY::Spinner.new(format: :classic)
+      @cursor  = TTY::Cursor
     end
 
     def debug!(mode = :on)
       AskChatGPT.debug = mode == :on
+    end
+
+    def sync!
+      AskChatGPT.mode = :sync
+    end
+
+    def async!
+      AskChatGPT.mode = :async
     end
 
     def with_model(*models)
@@ -44,31 +56,68 @@ module AskChatgpt
 
     def inspect
       pp(executor_parameters) if AskChatGPT.debug
-      puts(call); nil
+      call_with_validations do
+        case AskChatGPT.mode
+        when :async
+          call_async
+        else
+          call_sync
+        end
+      end
+    rescue InputError => e
+      puts e.message
     rescue StandardError => e
       puts e.message
       puts e.backtrace.take(5).join("\n")
+    ensure
       nil
     end
 
-    def call
+    def call_with_validations
       if scope.empty? || (scope.size == 1 && scope.first.is_a?(AskChatGPT::Prompts::App))
-        return puts("No prompts given")
+        raise InputError, "No prompts given"
       end
+      yield
+    end
 
-      spinner = TTY::Spinner.new(format: :classic)
+    def call_async
+      # we will collect all chunks and print them at once later with Markdown
+      content = []
+      print cursor.save
+
+      spinner.auto_spin
+      response = client.chat(parameters: executor_parameters.merge({
+        stream: proc do |chunk, _bytesize|
+          spinner.stop if spinner&.spinning?
+          content_part = chunk.dig("choices", 0, "delta", "content")
+          content << content_part
+          print content_part
+        end
+      }))
+
+      spinner&.stop
+
+      print cursor.restore
+      print cursor.down
+      print cursor.clear_screen_down
+      parsed = TTY::Markdown.parse(content.compact.join)
+      puts parsed
+    ensure
+      spinner.stop if spinner&.spinning?
+    end
+
+    def call_sync
       spinner.auto_spin
       response = client.chat(parameters: executor_parameters)
-      spinner.stop
-
       pp(response) if AskChatGPT.debug
+      spinner&.stop
 
       if response["error"]
-        puts response["error"]["message"]
+        puts(response["error"]["message"])
       else
         content = response.dig("choices", 0, "message", "content")
         parsed = TTY::Markdown.parse(content)
-        parsed
+        puts(parsed)
       end
     ensure
       spinner.stop if spinner&.spinning?
@@ -84,9 +133,8 @@ module AskChatgpt
     end
 
     def add_prompt(prompt)
-      @scope << prompt
+      scope << prompt
       self
     end
-
   end
 end

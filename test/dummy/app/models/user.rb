@@ -27,4 +27,8 @@ class User < ApplicationRecord
   def say_hello
     "Hello, #{full_name}!"
   end
+
+  def total(a, b)
+    a + b
+  end
 end

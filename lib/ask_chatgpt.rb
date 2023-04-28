@@ -5,6 +5,7 @@ require "json"
 require "openai"
 require "tty-markdown"
 require "tty-spinner"
+require "tty-cursor"
 
 require_relative "ask_chatgpt/console"
 require_relative "ask_chatgpt/executor"
@@ -13,6 +14,10 @@ require_relative "ask_chatgpt/core"
 
 module AskChatgpt
   ::AskChatGPT = AskChatgpt
+
+  # async mode will use OpenAI streamming feature and will return results as they come
+  mattr_accessor :mode
+  @@mode = :async # or :sync
 
   mattr_accessor :debug
   @@debug = false

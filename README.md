@@ -8,7 +8,7 @@ AI-Powered Assistant Gem right in your Rails console.
 ![AskChatGPT](docs/gpt.gif)
 
 A Gem that leverages the power of AI to make your development experience more efficient and enjoyable. With this gem, you can streamline your coding process, effortlessly refactor and improve your code, and even generate tests on the fly.
-
++
 See more [examples](#examples) below.
 
 ## Usage
@@ -88,6 +88,9 @@ And you can edit:
 ```ruby
   AskChatGPT.setup do |config|
     # config.access_token    = ENV["OPENAI_API_KEY"]
+
+    # async mode will use OpenAI streamming feature and will return results as they come
+    # config.mode            = :async # or :sync
     # config.debug           = false
     # config.model           = "gpt-3.5-turbo"
     # config.temperature     = 0.1
@@ -95,7 +98,7 @@ And you can edit:
     # config.included_prompt = []
 
     # Examples of custom prompts:
-    # you can use them `gpt.ask(:extract_email, "some string")`
+    # you can use them `gpt.extract_email("some string")`
 
     # config.register_prompt :extract_email do |arg|
     #   "Extract email from: #{arg} as JSON"
@@ -122,7 +125,7 @@ You can define you own prompts and use them using `.register_prompt`. For exampl
 ```
 
 And later you can call it with `gpt.extract_email("some text with email@site.com, user@email.com")`.
-If you believe your custom promts will be useful - create a PR for this gem.
+If you believe your custom prompt will be useful - create a PR for this gem.
 
 If you want to get source code use this helper `AskChatGPT::Helpers.extract_source(str)`.
 
@@ -148,6 +151,15 @@ end
 
 or directly in console `gpt.debug!` (and finish `gpt.debug!(:off)`)
 
+## Streaming (async vs sync mode)
+
+Control the mode from a console. Or, from the initializer, using `config.mode = :async` (or sync).
+
+```ruby
+  gpt.async!
+  gpt.sync!
+```
+
 ## TODO
 
 - cli app? `ask_gpt <something> --file <file>` ...
@@ -158,7 +170,6 @@ or directly in console `gpt.debug!` (and finish `gpt.debug!(:off)`)
 - print tokens usage? `.with_usage`
 - support org_id? in the configs
 - use `gpt` in the code of the main app (e.g. model/controller)
-- remove dependency on `ruby-openai` and just do a `Net::HTTP` call
 
 ## Contributing
 

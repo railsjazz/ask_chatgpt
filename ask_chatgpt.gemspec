@@ -17,9 +17,10 @@ Gem::Specification.new do |spec|
   end
 
   spec.add_dependency "rails"
-  spec.add_dependency "ruby-openai"
+  spec.add_dependency "ruby-openai", ">= 4.0.0"
   spec.add_dependency "tty-markdown"
   spec.add_dependency "tty-spinner"
+  spec.add_dependency "tty-cursor"
   spec.add_dependency "irb", ">= 1.4.3"
   spec.add_development_dependency 'wrapped_print'
   spec.add_development_dependency 'pry'
