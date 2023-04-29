@@ -106,7 +106,7 @@ module AskChatgpt
         temperature: AskChatGPT.temperature,
         max_tokens: AskChatGPT.max_tokens,
         messages: scope.map { |e| { role: "user", content: e.content } }.reject { |e| e[:content].blank? },
-      }.compact_blank
+      }.reject { |_, v| v.blank? }
     end
   end
 end

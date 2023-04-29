@@ -7,7 +7,7 @@ module AskChatgpt
           schema_info,
           associations_info,
           instructions_info
-        ].compact_blank.join("\n\n")
+        ].reject { |v| v.blank? }.join("\n\n")
       end
 
       private
