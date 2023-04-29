@@ -1,4 +1,4 @@
-require "ask_chatgpt/version"
+require_relative "ask_chatgpt/version"
 require "ask_chatgpt/railtie" if defined?(Rails)
 require "net/http"
 require "json"

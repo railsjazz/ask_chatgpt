@@ -5,7 +5,7 @@
 
 AI-Powered Assistant Gem right in your Rails console.
 
-![AskChatGPT](docs/gpt.gif)
+![AskChatGPT](docs/interactive.gif)
 
 A Gem that leverages the power of AI to make your development experience more efficient and enjoyable. With this gem, you can streamline your coding process, effortlessly refactor and improve your code, and even generate tests on the fly.
 +
@@ -34,6 +34,8 @@ Go to Rails console and run:
 ```
 
 See some examples below. You can also create your own prompts with just few lines of code [here](#options--configurations).
+
+Also you can use a CLI tool, [how to use it](#cli-tool).
 
 ## Examples
 
@@ -158,6 +160,23 @@ end
 ```
 
 or directly in console `gpt.debug!` (and finish `gpt.debug!(:off)`)
+
+## CLI Tool
+
+Example 1:
+![AskChatGPT](docs/unzip.gif)
+
+Example 2:
+![AskChatGPT](docs/avg_user_age_json.gif)
+
+How to use:
+
+```
+  ask_chatgpt -q "How to parse JSON file in Ruby?"
+  ask_chatgpt -f app/models/user.rb -q "find a bug in this Rails model"
+  ask_chatgpt -f app/models/user.rb -q "create RSpec spec for this model"
+  ask_chatgpt -f test/dummy/Gemfile -q "sort Ruby gems alphabetically"
+```
 
 ## Streaming (async vs sync mode)
 
