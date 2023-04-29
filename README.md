@@ -33,6 +33,19 @@ Go to Rails console and run:
   }
 ```
 
+OR with CLI tool:
+
+```shell
+>ask_chatgpt -q "134*1245"
+166830
+
+>ask_chatgpt base64 this string "hello world"
+aGVsbG8gd29ybGQ=
+
+>ask_chatgpt decode base64 this string "aGVsbG8gd29ybGQ="
+hello world
+```
+
 See some examples below. You can also create your own prompts with just few lines of code [here](#options--configurations).
 
 Also you can use a CLI tool, [how to use it](#cli-tool).
