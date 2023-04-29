@@ -1,3 +1,6 @@
+# to make sure we have good gem version
+gem "ruby-openai", '>= 4.0.0'
+
 require_relative "ask_chatgpt/version"
 require "ask_chatgpt/railtie" if defined?(Rails)
 require "net/http"

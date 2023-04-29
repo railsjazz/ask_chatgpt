@@ -15,6 +15,9 @@ parser = OptionParser.new do |opts|
   opts.banner = <<-USAGE
     Usage: ask_chatgpt [options]"
 
+    Make sure you have set OPENAI_API_KEY environment variable.
+    You can put it in your ~/.bashrc, ~/.bash_profile, ~/.zshrc file or using plenty of other options.
+
     Examples:
       ask_chatgpt -q "How to parse JSON file in Ruby?"
       ask_chatgpt -f app/models/user.rb -q "find a bug in this Rails model"
