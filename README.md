@@ -90,13 +90,13 @@ And you can edit:
     # config.access_token    = ENV["OPENAI_API_KEY"]
 
     # async mode will use OpenAI streamming feature and will return results as they come
-    # config.mode            = :async # or :sync
-    # config.markdown        = true # try to convert response if Markdown
-    # config.debug           = false
-    # config.model           = "gpt-3.5-turbo"
-    # config.temperature     = 0.1
-    # config.max_tokens      = 3000 # or nil by default
-    # config.included_prompt = []
+    # config.mode             = :async # or :sync
+    # config.markdown         = true # try to output nicely Markdown response
+    # config.debug            = false
+    # config.model            = "gpt-3.5-turbo"
+    # config.temperature      = 0.1
+    # config.max_tokens       = 3000 # or nil by default
+    # config.included_prompts = []
 
     # Examples of custom prompts:
     # you can use them `gpt.extract_email("some string")`
@@ -140,6 +140,8 @@ You can pass:
   AskChatGPT::Helpers.extract_source("a = b")
 ```
 
+By default when you use in Rails app default one prompt is included (`.included_prompts`) which is sending Ruby/Rails versions, and name of the database adapter.
+
 ## Debug Mode
 
 You can enable debug mode to see request/response from the OpenAI using two ways:
@@ -168,7 +170,7 @@ Control the mode from a console. Or, from the initializer, using `config.mode = 
 
 ## Markdown
 
-Try to format response from Markdown and print nicely in the console.
+Try to format response from Markdown and print it nicely in the console.
 
 ```ruby
 AskChatGPT.setup do |config|
@@ -183,10 +185,9 @@ end
 
 ## TODO
 
-- cli app? `ask_gpt <something> --file <file>` ...
+- better CLI?
 - more prompts (cover controllers, sql, etc?), e.g. `with_controller`, `with_class`, ...
 - tests(rspec, vcr)
-- CI (but first specs)
 - can it be used with pry/byebug/etc?
 - print tokens usage? `.with_usage`
 - support org_id? in the configs

@@ -1,14 +1,12 @@
 #!/usr/bin/env ruby
 
 require 'optparse'
-require 'pry'
 require 'active_support'
-# require 'rails'
 
 require_relative "../lib/ask_chatgpt"
 
 AskChatgpt.setup do |config|
-  config.included_prompt = []
+  config.included_prompts = []
 end
 
 options = {}

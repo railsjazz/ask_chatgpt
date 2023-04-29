@@ -43,8 +43,8 @@ module AskChatgpt
 
   # this prompt is always included
   # it constain info that you have Rails app and Rails/Ruby versions, and DB adapter name
-  mattr_accessor :included_prompt
-  @@included_prompt = [AskChatGPT::Prompts::App.new]
+  mattr_accessor :included_prompts
+  @@included_prompts = [AskChatGPT::Prompts::App.new]
 
   def self.setup
     yield(self)

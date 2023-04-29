@@ -19,7 +19,7 @@ module AskChatgpt
     attr_reader :scope, :client, :spinner, :cursor
 
     def initialize(client)
-      @scope   = AskChatGPT.included_prompt.dup
+      @scope   = AskChatGPT.included_prompts.dup
       @client  = client
       @spinner = TTY::Spinner.new(format: :classic)
       @cursor  = TTY::Cursor
