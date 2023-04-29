@@ -5,7 +5,7 @@ Gem::Specification.new do |spec|
   spec.version     = AskChatgpt::VERSION
   spec.authors     = ["Igor Kasyanchuk", "Liubomyr Manastyretskyi"]
   spec.email       = ["igorkasyanchuk@gmail.com", "manastyretskyi@gmail.com"]
-  spec.homepage    = "https://github.com/railsjazz.com/ask_chatgpt"
+  spec.homepage    = "https://github.com/railsjazz/ask_chatgpt"
   spec.summary     = "AI-Powered Assistant Gem right in your Rails console."
   spec.description = "AI-Powered Assistant Gem right in your Rails console."
   spec.license     = "MIT"
