@@ -16,7 +16,7 @@ Gem::Specification.new do |spec|
     Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.md", "bin/ask_chatgpt"]
   end
 
-  s.executables   = ["ask_chatgpt"]
+  spec.executables   = ["ask_chatgpt"]
 
   spec.add_dependency "rails"
   spec.add_dependency "ruby-openai", ">= 4.0.0"
