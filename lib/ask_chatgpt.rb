@@ -1,10 +1,11 @@
-require "ask_chatgpt/version"
-require "ask_chatgpt/railtie"
+require_relative "ask_chatgpt/version"
+require "ask_chatgpt/railtie" if defined?(Rails)
 require "net/http"
 require "json"
 require "openai"
 require "tty-markdown"
 require "tty-spinner"
+require "tty-cursor"
 
 require_relative "ask_chatgpt/console"
 require_relative "ask_chatgpt/executor"
@@ -13,6 +14,13 @@ require_relative "ask_chatgpt/core"
 
 module AskChatgpt
   ::AskChatGPT = AskChatgpt
+
+  # async mode will use OpenAI streamming feature and will return results as they come
+  mattr_accessor :mode
+  @@mode = :async # or :sync
+
+  mattr_accessor :markdown
+  @@markdown = true
 
   mattr_accessor :debug
   @@debug = false
@@ -35,8 +43,8 @@ module AskChatgpt
 
   # this prompt is always included
   # it constain info that you have Rails app and Rails/Ruby versions, and DB adapter name
-  mattr_accessor :included_prompt
-  @@included_prompt = [AskChatGPT::Prompts::App.new]
+  mattr_accessor :included_prompts
+  @@included_prompts = [AskChatGPT::Prompts::App.new]
 
   def self.setup
     yield(self)

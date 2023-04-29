@@ -13,13 +13,16 @@ Gem::Specification.new do |spec|
   spec.metadata["homepage_uri"] = spec.homepage
 
   spec.files = Dir.chdir(File.expand_path(__dir__)) do
-    Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.md"]
+    Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.md", "bin/ask_chatgpt"]
   end
 
+  spec.executables = ["ask_chatgpt"]
+
   spec.add_dependency "rails"
-  spec.add_dependency "ruby-openai"
+  spec.add_dependency "ruby-openai", ">= 4.0.0"
   spec.add_dependency "tty-markdown"
   spec.add_dependency "tty-spinner"
+  spec.add_dependency "tty-cursor"
   spec.add_dependency "irb", ">= 1.4.3"
   spec.add_development_dependency 'wrapped_print'
   spec.add_development_dependency 'pry'

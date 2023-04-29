@@ -11,12 +11,12 @@ class User < ApplicationRecord
 
   # bad code on purpose
   def self.get_report
-    result = ["<users>"]
+    result = ["USERS("]
     for user in User.where("id > 0")
-      result << "<user>" + "<id>#{user.id}</id>" + "<name>#{user.name}</name>" + "</user>"
+      result << "USER(" + "ID=#{user.id};" + "NAME=#{user.name}" + ")USER"
     end
     variable = 42
-    result += "</users>"
+    result += ")USERS"
     result.join("\n")
   end
 
@@ -26,5 +26,9 @@ class User < ApplicationRecord
 
   def say_hello
     "Hello, #{full_name}!"
+  end
+
+  def total(a, b)
+    a + b
   end
 end

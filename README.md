@@ -5,10 +5,10 @@
 
 AI-Powered Assistant Gem right in your Rails console.
 
-![AskChatGPT](docs/gpt.gif)
+![AskChatGPT](docs/interactive.gif)
 
 A Gem that leverages the power of AI to make your development experience more efficient and enjoyable. With this gem, you can streamline your coding process, effortlessly refactor and improve your code, and even generate tests on the fly.
-
++
 See more [examples](#examples) below.
 
 ## Usage
@@ -33,7 +33,22 @@ Go to Rails console and run:
   }
 ```
 
+OR with CLI tool:
+
+```shell
+>ask_chatgpt -q "134*1245"
+166830
+
+>ask_chatgpt base64 this string "hello world"
+aGVsbG8gd29ybGQ=
+
+>ask_chatgpt decode base64 this string "aGVsbG8gd29ybGQ="
+hello world
+```
+
 See some examples below. You can also create your own prompts with just few lines of code [here](#options--configurations).
+
+Also you can use a CLI tool, [how to use it](#cli-tool).
 
 ## Examples
 
@@ -88,14 +103,18 @@ And you can edit:
 ```ruby
   AskChatGPT.setup do |config|
     # config.access_token    = ENV["OPENAI_API_KEY"]
-    # config.debug           = false
-    # config.model           = "gpt-3.5-turbo"
-    # config.temperature     = 0.1
-    # config.max_tokens      = 3000 # or nil by default
-    # config.included_prompt = []
+
+    # async mode will use OpenAI streamming feature and will return results as they come
+    # config.mode             = :async # or :sync
+    # config.markdown         = true # try to output nicely Markdown response
+    # config.debug            = false
+    # config.model            = "gpt-3.5-turbo"
+    # config.temperature      = 0.1
+    # config.max_tokens       = 3000 # or nil by default
+    # config.included_prompts = []
 
     # Examples of custom prompts:
-    # you can use them `gpt.ask(:extract_email, "some string")`
+    # you can use them `gpt.extract_email("some string")`
 
     # config.register_prompt :extract_email do |arg|
     #   "Extract email from: #{arg} as JSON"
@@ -111,7 +130,15 @@ And you can edit:
   end
 ```
 
-Note: that you need to setup your API Key https://platform.openai.com/account/api-keys. You can store it in the .env or .bash_profile. BUT make sure it won't be committed to the Github. Is must be private.
+Note: that you need to setup your API Key https://platform.openai.com/account/api-keys. You can store it in the .env or .bash_profile.
+
+Example with `nano ~/.bash_profile`:
+
+```
+export OPENAI_API_KEY=key
+```
+
+BUT make sure it won't be committed to the Github. Is must be private.
 
 You can define you own prompts and use them using `.register_prompt`. For example:
 
@@ -122,7 +149,7 @@ You can define you own prompts and use them using `.register_prompt`. For exampl
 ```
 
 And later you can call it with `gpt.extract_email("some text with email@site.com, user@email.com")`.
-If you believe your custom promts will be useful - create a PR for this gem.
+If you believe your custom prompt will be useful - create a PR for this gem.
 
 If you want to get source code use this helper `AskChatGPT::Helpers.extract_source(str)`.
 
@@ -136,6 +163,8 @@ You can pass:
   AskChatGPT::Helpers.extract_source("a = b")
 ```
 
+By default when you use in Rails app default one prompt is included (`.included_prompts`) which is sending Ruby/Rails versions, and name of the database adapter.
+
 ## Debug Mode
 
 You can enable debug mode to see request/response from the OpenAI using two ways:
@@ -144,21 +173,65 @@ You can enable debug mode to see request/response from the OpenAI using two ways
 AskChatGPT.setup do |config|
   config.debug = false
 end
+
+# or
+
+# gpt.on!(:debug)
+# gpt.off!(:debug)
 ```
 
 or directly in console `gpt.debug!` (and finish `gpt.debug!(:off)`)
 
+## CLI Tool
+
+Example 1:
+![AskChatGPT](docs/unzip.gif)
+
+Example 2:
+![AskChatGPT](docs/avg_user_age_json.gif)
+
+How to use:
+
+```
+  ask_chatgpt -q "How to parse JSON file in Ruby?"
+  ask_chatgpt -f app/models/user.rb -q "find a bug in this Rails model"
+  ask_chatgpt -f app/models/user.rb -q "create RSpec spec for this model"
+  ask_chatgpt -f test/dummy/Gemfile -q "sort Ruby gems alphabetically"
+```
+
+## Streaming (async vs sync mode)
+
+Control the mode from a console. Or, from the initializer, using `config.mode = :async` (or sync).
+
+```ruby
+  gpt.async!
+  gpt.sync!
+```
+
+## Markdown
+
+Try to format response from Markdown and print it nicely in the console.
+
+```ruby
+AskChatGPT.setup do |config|
+  config.markdown = true
+end
+
+# or
+
+# gpt.on!(:markdown)
+# gpt.off!(:markdown)
+```
+
 ## TODO
 
-- cli app? `ask_gpt <something> --file <file>` ...
+- better CLI?
 - more prompts (cover controllers, sql, etc?), e.g. `with_controller`, `with_class`, ...
 - tests(rspec, vcr)
-- CI (but first specs)
 - can it be used with pry/byebug/etc?
 - print tokens usage? `.with_usage`
 - support org_id? in the configs
 - use `gpt` in the code of the main app (e.g. model/controller)
-- remove dependency on `ruby-openai` and just do a `Net::HTTP` call
 
 ## Contributing
 

@@ -1,10 +1,14 @@
 AskChatGPT.setup do |config|
   # config.access_token    = ENV["OPENAI_API_KEY"]
-  # config.debug           = false
-  # config.model           = "gpt-3.5-turbo"
-  # config.max_tokens      = 3000 # or nil by default
-  # config.temperature     = 0.1
-  # config.included_prompt = []
+
+  # async mode will use OpenAI streamming feature and will return results as they come
+  # config.mode             = :async # or :sync
+  # config.markdown         = true # try to convert response if Markdown
+  # config.debug            = false
+  # config.model            = "gpt-3.5-turbo"
+  # config.max_tokens       = 3000 # or nil by default
+  # config.temperature      = 0.1
+  # config.included_prompts = []
 
   # Examples of custom prompts:
   # you can use them `gpt.ask(:extract_email, "some string")`
