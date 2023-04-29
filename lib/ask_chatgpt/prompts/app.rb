@@ -6,7 +6,7 @@ module AskChatgpt
           general_info,
           version_info,
           database_info
-        ].compact_blank.join(", ")
+        ].reject { |v| v.blank? }.join(", ")
       end
 
       private

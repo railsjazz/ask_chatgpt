@@ -6,7 +6,7 @@ module AskChatgpt
         [
           action_info,
           method_info,
-        ].compact_blank.join("\n")
+        ].reject { |v| v.blank? }.join("\n")
       end
 
       private

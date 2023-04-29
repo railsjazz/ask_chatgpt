@@ -13,7 +13,8 @@ module AskChatgpt
 
     DEFAULT_PROMPTS.each do |method|
       define_method(method) do |*args|
-        add_prompt(AskChatGPT::Prompts.const_get(method.to_s.camelize).new(*args))
+        # camelize method name and get constant from AskChatGPT::Prompts
+        add_prompt(AskChatGPT::Prompts.const_get(ActiveSupport::Inflector.camelize(method.to_s)).new(*args))
       end
     end
     alias :ask :question

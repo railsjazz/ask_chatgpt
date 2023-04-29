@@ -1,0 +1,62 @@
+#!/usr/bin/env ruby
+
+require 'optparse'
+require 'pry'
+require 'active_support'
+# require 'rails'
+
+require_relative "../lib/ask_chatgpt"
+
+AskChatgpt.setup do |config|
+  config.included_prompt = []
+end
+
+options = {}
+
+parser = OptionParser.new do |opts|
+  opts.banner = <<-USAGE
+    Usage: ask_chatgpt [options]"
+
+    Examples:
+      ask_chatgpt -q "How to parse JSON file in Ruby?"
+      ask_chatgpt -f app/models/user.rb -q "find a bug in this Rails model"
+      ask_chatgpt -f app/models/user.rb -q "create RSpec spec for this model"
+      ask_chatgpt -f test/dummy/Gemfile -q "sort Ruby gems alphabetically"
+
+  USAGE
+
+  opts.on("-q", "--question \"Your Prompt\"", String, "Specify your prompt with full context, language, etc.") do |prompt|
+    options[:prompt] = prompt
+  end
+
+  opts.on("-f", "--file FILE", String, "Specify file with prompt") do |file|
+    options[:file_path] = file
+  end
+
+  opts.on("-d", "--debug", "Output request/response") do |debug|
+    options[:debug] = true
+  end
+
+  opts.on("-h", "--help", "Prints this help") do
+    puts opts
+    exit
+  end
+end
+
+parser.parse!
+
+AskChatGPT.debug = !!options[:debug]
+
+options[:prompt] = ARGV.join(" ") if options[:prompt].blank?
+
+if options[:prompt].blank?
+  puts parser
+  exit
+end
+
+include AskChatGPT::Console
+
+instance = gpt.ask(options[:prompt])
+instance = instance.payload(File.read(options[:file_path])) if options[:file_path].present?
+
+puts instance.inspect
