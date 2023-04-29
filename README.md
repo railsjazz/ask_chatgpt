@@ -117,7 +117,15 @@ And you can edit:
   end
 ```
 
-Note: that you need to setup your API Key https://platform.openai.com/account/api-keys. You can store it in the .env or .bash_profile. BUT make sure it won't be committed to the Github. Is must be private.
+Note: that you need to setup your API Key https://platform.openai.com/account/api-keys. You can store it in the .env or .bash_profile.
+
+Example with `nano ~/.bash_profile`:
+
+```
+export OPENAI_API_KEY=key
+```
+
+BUT make sure it won't be committed to the Github. Is must be private.
 
 You can define you own prompts and use them using `.register_prompt`. For example:
 
