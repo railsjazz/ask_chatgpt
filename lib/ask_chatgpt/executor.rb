@@ -18,6 +18,11 @@ module AskChatgpt
 
     attr_reader :scope, :client, :spinner, :cursor
 
+    def self.call
+      client = OpenAI::Client.new(access_token: AskChatGPT.access_token)
+      AskChatgpt::Executor.new(client)
+    end
+
     def initialize(client)
       @scope   = AskChatGPT.included_prompts.dup
       @client  = client
@@ -26,6 +31,9 @@ module AskChatgpt
     end
 
     def inspect
+      return if @executed
+      @executed = true
+
       pp(executor_parameters) if AskChatGPT.debug
       call_with_validations do
         case AskChatGPT.mode
@@ -35,11 +43,14 @@ module AskChatgpt
           call_sync
         end
       end
-    rescue InputError => e
+      nil
+    rescue SystemExit, SignalException, InputError, NoMethodError => e
       puts e.message
     rescue StandardError => e
       puts e.message
       puts e.backtrace.take(5).join("\n")
+    rescue Exception => e
+      puts e.message
     ensure
       nil
     end
@@ -68,18 +79,22 @@ module AskChatgpt
           print content_part
         end
       }))
+      spinner&.stop if spinner&.spinning?
       if AskChatGPT.markdown
+        result = content.compact.join
+        shift = result.split("\n").size == 1 ? 1 : result.split("\n").size + 1
         # re-draw the screen
         # go back to the top by the number of new lines previously printed
-        print cursor.clear_lines(content.compact.join.split("\n").size + 1, :up)
+        print cursor.clear_lines(shift, :up)
         # print cursor.restore
         # print cursor.down
         # print cursor.clear_screen_down
         # $content = content.compact.join
-        puts(TTY::Markdown.parse(content.compact.join))
+        puts(TTY::Markdown.parse(result))
       else
         # nothing, content is already printed in the stream
       end
+      nil
     end
 
     # wait for the whole response and print it at once
@@ -98,6 +113,7 @@ module AskChatgpt
           puts(content)
         end
       end
+      nil
     end
 
     def executor_parameters

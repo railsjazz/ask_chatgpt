@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    ask_chatgpt (0.3.0)
+    ask_chatgpt (0.3.1)
       irb (>= 1.4.3)
       rails
       ruby-openai (>= 4.0.0)

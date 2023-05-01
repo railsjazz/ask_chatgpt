@@ -9,11 +9,11 @@ require "openai"
 require "tty-markdown"
 require "tty-spinner"
 require "tty-cursor"
+require "irb"
 
 require_relative "ask_chatgpt/console"
 require_relative "ask_chatgpt/executor"
 require_relative "ask_chatgpt/helpers"
-require_relative "ask_chatgpt/core"
 
 module AskChatgpt
   ::AskChatGPT = AskChatgpt

@@ -26,4 +26,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "irb", ">= 1.4.3"
   spec.add_development_dependency 'wrapped_print'
   spec.add_development_dependency 'pry'
+
+  # for testing when pry-rails changes console behavior
+  # spec.add_development_dependency 'pry-rails'
 end
