@@ -1,3 +1,7 @@
+- 0.3.1
+  - stability improvements (do not print message two times)
+  - fix for show_source when in the app user pry-rails gem
+
 - 0.3.0
   - added CLI tool:
     Example:

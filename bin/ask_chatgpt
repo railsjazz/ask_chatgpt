@@ -2,6 +2,7 @@
 
 require 'optparse'
 require 'active_support'
+require 'irb'
 
 require_relative "../lib/ask_chatgpt"
 
@@ -23,6 +24,8 @@ parser = OptionParser.new do |opts|
       ask_chatgpt -f app/models/user.rb -q "find a bug in this Rails model"
       ask_chatgpt -f app/models/user.rb -q "create RSpec spec for this model"
       ask_chatgpt -f test/dummy/Gemfile -q "sort Ruby gems alphabetically"
+
+    Version: #{AskChatGPT::VERSION}
 
   USAGE
 

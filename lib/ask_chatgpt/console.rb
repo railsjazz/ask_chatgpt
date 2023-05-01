@@ -1,7 +1,7 @@
 module AskChatgpt
   module Console
     def gpt
-      AskChatGPT::Core.call
+      AskChatGPT::Executor.call
     end
 
     alias :chatgpt :gpt
