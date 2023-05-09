@@ -2,6 +2,7 @@ require_relative "sugar"
 require_relative "prompts/base"
 require_relative "prompts/improve"
 require_relative "default_behavior"
+require_relative "voice"
 
 Dir[File.join(__dir__, "prompts", "*.rb")].each do |file|
   require file
@@ -22,6 +23,14 @@ module AskChatgpt
       client = OpenAI::Client.new(access_token: AskChatGPT.access_token)
       AskChatgpt::Executor.new(client)
     end
+
+    def speak
+      puts "Voice input is not enabled (docs: https://github.com/railsjazz/ask_chatgpt)" unless AskChatGPT.voice_enabled
+      puts "Audio device ID is not configured (docs: https://github.com/railsjazz/ask_chatgpt)" unless AskChatGPT.audio_device_id
+
+      AskChatgpt::VoiceFlow::Voice.new.run
+    end
+    alias_method :s, :speak
 
     def initialize(client)
       @scope   = AskChatGPT.included_prompts.dup

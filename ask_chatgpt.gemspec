@@ -24,6 +24,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "tty-spinner"
   spec.add_dependency "tty-cursor"
   spec.add_dependency "irb", ">= 1.4.3"
+  spec.add_dependency "io-console"
   spec.add_development_dependency 'wrapped_print'
   spec.add_development_dependency 'pry'
 

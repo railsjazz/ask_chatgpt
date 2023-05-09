@@ -7,6 +7,10 @@ AskChatGPT.setup do |config|
   config.included_prompts = [AskChatGPT::Prompts::App.new]
   # config.included_prompts = []
 
+  config.voice_enabled = true
+  config.audio_device_id = 1
+  config.voice_max_duration = 10 # 10 seconds
+
   config.register_prompt :extract_email do |arg|
     "Extract email from: #{arg} as JSON"
   end

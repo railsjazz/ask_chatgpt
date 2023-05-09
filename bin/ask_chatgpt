@@ -24,6 +24,7 @@ parser = OptionParser.new do |opts|
       ask_chatgpt -f app/models/user.rb -q "find a bug in this Rails model"
       ask_chatgpt -f app/models/user.rb -q "create RSpec spec for this model"
       ask_chatgpt -f test/dummy/Gemfile -q "sort Ruby gems alphabetically"
+      ask_chatgpt -s 1"
 
     Version: #{AskChatGPT::VERSION}
 
@@ -31,6 +32,10 @@ parser = OptionParser.new do |opts|
 
   opts.on("-q", "--question \"Your Prompt\"", String, "Specify your prompt with full context, language, etc.") do |prompt|
     options[:prompt] = prompt
+  end
+
+  opts.on("-s", "--speak AudioDeviceID", String, "Specify audio device ID") do |audio_device_id|
+    options[:audio_device_id] = audio_device_id
   end
 
   opts.on("-f", "--file FILE", String, "Specify file with prompt") do |file|
@@ -53,14 +58,22 @@ AskChatGPT.debug = !!options[:debug]
 
 options[:prompt] = ARGV.join(" ") if options[:prompt].blank?
 
-if options[:prompt].blank?
+if options[:prompt].blank? &&  options[:audio_device_id].blank?
   puts parser
   exit
 end
 
 include AskChatGPT::Console
 
-instance = gpt.ask(options[:prompt])
-instance = instance.payload(File.read(options[:file_path])) if options[:file_path].present?
+if options[:audio_device_id].present?
+  AskChatGPT.voice_enabled = true
+  AskChatGPT.voice_max_duration = 20
+  AskChatGPT.audio_device_id = options[:audio_device_id]
 
-puts instance.inspect
+  instance = gpt.speak
+else
+  instance = gpt.ask(options[:prompt])
+  instance = instance.payload(File.read(options[:file_path])) if options[:file_path].present?
+
+  puts instance.inspect
+end
