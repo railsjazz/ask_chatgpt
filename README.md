@@ -297,6 +297,8 @@ end
 - support org_id? in the configs
 - use `gpt` in the code of the main app (e.g. model/controller)
 - when voice is used add support for payloads, e.g. `gpt.with_payload(json).speak` (and it will send payload with my question)
+- refactor voice input code :) as first version it's fine
+- can we discover audio device ID?
 
 ## Contributing
 
