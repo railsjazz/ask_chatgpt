@@ -31,6 +31,10 @@ Go to Rails console and run:
       [first_name, last_name].join
     end
   }
+  #
+  # --- NEW ---
+  #
+  gpt.speak # or with alias gpt.s
 ```
 
 OR with CLI tool:
@@ -45,6 +49,8 @@ aGVsbG8gd29ybGQ=
 >ask_chatgpt decode base64 this string "aGVsbG8gd29ybGQ="
 hello world
 ```
+
+>ask_chatgpt -s 1 # start voice input with CLI
 
 See some examples below. You can also create your own prompts with just few lines of code [here](#options--configurations).
 
@@ -112,6 +118,17 @@ And you can edit:
     # config.temperature      = 0.1
     # config.max_tokens       = 3000 # or nil by default
     # config.included_prompts = []
+
+    # enable voice input with `gpt.speak` or `gpt.s`. Note, you also need to configure `audio_device_id`
+    # config.voice_enabled = true
+
+    # to get audio device ID (index in the input devices)
+    # install ffmpeg, and execute from the console
+    # `ffmpeg -f avfoundation -list_devices true -i ""`
+    # config.audio_device_id = 1
+
+    # after "voice_max_duration" seconds it will send audio to Open AI
+    # config.voice_max_duration = 10 # 10 seconds
 
     # Examples of custom prompts:
     # you can use them `gpt.extract_email("some string")`
@@ -182,7 +199,54 @@ end
 
 or directly in console `gpt.debug!` (and finish `gpt.debug!(:off)`)
 
+## Voice Input
+
+Demo: https://youtu.be/uBR0wnQvKao
+
+For now I consider this as an experimental and fun feature. Look forward seeing your feedback.
+
+Works with command: `gpt.speak` or `gpt.s` (alias).
+
+This command starts recording right away and it will stop after `voice_max_duration` seconds or if you press any key.
+
+To exit recording mode press `Q`.
+
+Voice is using `ffmpeg` tool, so you need to install it. Some instruction like this will work: https://www.hostinger.com/tutorials/how-to-install-ffmpeg.
+
+Also, you need to configure `audio_device_id`. Run `ffmpeg -f avfoundation -list_devices true -i ""`
+
+It will give you list of all devices, like this:
+
+```s
+ffmpeg -f avfoundation -list_devices true -i ""
+ffmpeg version 6.0 Copyright (c) 2000-2023 the FFmpeg developers
+  built with Apple clang version 14.0.0 (clang-1400.0.29.202)
+  configuration: --prefix=/usr/local/Cellar/ffmpeg/6.0 --enable-shared --enable-pthreads --enable-version3 --cc=clang --host-cflags= --host-ldflags= --enable-ffplay --enable-gnutls --enable-gpl --enable-libaom --enable-libaribb24 --enable-libbluray --enable-libdav1d --enable-libmp3lame --enable-libopus --enable-librav1e --enable-librist --enable-librubberband --enable-libsnappy --enable-libsrt --enable-libsvtav1 --enable-libtesseract --enable-libtheora --enable-libvidstab --enable-libvmaf --enable-libvorbis --enable-libvpx --enable-libwebp --enable-libx264 --enable-libx265 --enable-libxml2 --enable-libxvid --enable-lzma --enable-libfontconfig --enable-libfreetype --enable-frei0r --enable-libass --enable-libopencore-amrnb --enable-libopencore-amrwb --enable-libopenjpeg --enable-libspeex --enable-libsoxr --enable-libzmq --enable-libzimg --disable-libjack --disable-indev=jack --enable-videotoolbox
+  libavutil      58.  2.100 / 58.  2.100
+  libavcodec     60.  3.100 / 60.  3.100
+  libavformat    60.  3.100 / 60.  3.100
+  libavdevice    60.  1.100 / 60.  1.100
+  libavfilter     9.  3.100 /  9.  3.100
+  libswscale      7.  1.100 /  7.  1.100
+  libswresample   4. 10.100 /  4. 10.100
+  libpostproc    57.  1.100 / 57.  1.100
+[AVFoundation indev @ 0x7f7fd1a04380] AVFoundation video devices:
+[AVFoundation indev @ 0x7f7fd1a04380] [0] FaceTime HD Camera
+[AVFoundation indev @ 0x7f7fd1a04380] [1] USB Camera VID:1133 PID:2085
+[AVFoundation indev @ 0x7f7fd1a04380] [2] Capture screen 0
+[AVFoundation indev @ 0x7f7fd1a04380] [3] Capture screen 1
+[AVFoundation indev @ 0x7f7fd1a04380] AVFoundation audio devices:
+[AVFoundation indev @ 0x7f7fd1a04380] [0] Microsoft Teams Audio
+[AVFoundation indev @ 0x7f7fd1a04380] [1] Built-in Microphone
+[AVFoundation indev @ 0x7f7fd1a04380] [2] Unknown USB Audio Device
+: Input/output error
+```
+
+In my case I used "1", because it's `Built-in Microphone`.
+
 ## CLI Tool
+
+You can ask questions from cli or even start voice input.
 
 Example 1:
 ![AskChatGPT](docs/unzip.gif)
@@ -232,6 +296,7 @@ end
 - print tokens usage? `.with_usage`
 - support org_id? in the configs
 - use `gpt` in the code of the main app (e.g. model/controller)
+- when voice is used add support for payloads, e.g. `gpt.with_payload(json).speak` (and it will send payload with my question)
 
 ## Contributing
 

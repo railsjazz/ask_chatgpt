@@ -10,6 +10,11 @@ AskChatGPT.setup do |config|
   # config.temperature      = 0.1
   # config.included_prompts = []
 
+  # enable voice input, requires ffmpeg to be installed and also you need to configure audio_device_id
+  # config.voice_enabled      = true
+  # config.audio_device_id    = 1
+  # config.voice_max_duration = 10 # 10 seconds
+
   # Examples of custom prompts:
   # you can use them `gpt.ask(:extract_email, "some string")`
 

@@ -17,12 +17,11 @@ module AskChatgpt
   module VoiceFlow
     require 'io/console'
     require 'fileutils'
-    require 'openai'
     require 'timeout'
     require 'open3'
 
     class AudioRecorder
-      OUTPUT_FILE = 'output.wav'
+      OUTPUT_FILE = "output.wav"
 
       def initialize(duration)
         @duration = duration
@@ -30,7 +29,7 @@ module AskChatgpt
 
       # ffmpeg -f avfoundation -list_devices true -i ""
       def audio_device_id
-        1
+        AskChatGPT.audio_device_id
       end
 
       def start
@@ -73,7 +72,7 @@ module AskChatgpt
       def initialize
         @messages = []
         @wanna_quit = false
-        @duration = 20
+        @duration = (AskChatGPT.voice_max_duration.presence || 10).to_i
         @ffmpeg_wait_duration = 0.5
         @executing = true
         @spinner = nil

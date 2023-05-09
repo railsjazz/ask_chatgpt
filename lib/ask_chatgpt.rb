@@ -49,6 +49,19 @@ module AskChatgpt
   mattr_accessor :included_prompts
   @@included_prompts = [AskChatGPT::Prompts::App.new]
 
+  # enable voice input, requires ffmpeg to be installed and also you need to configure audio_device_id
+  mattr_accessor :voice_enabled
+  @voice_enabled = false
+
+  # to get audio device ID (index in the input devices)
+  # ffmpeg -f avfoundation -list_devices true -i ""
+  mattr_accessor :audio_device_id
+  @@audio_device_id = nil
+
+  # max duration of audio to record
+  mattr_accessor :voice_max_duration
+  @@voice_max_duration = 10 # 10 seconds
+
   def self.setup
     yield(self)
   end

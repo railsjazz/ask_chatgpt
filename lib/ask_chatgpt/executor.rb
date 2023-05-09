@@ -25,6 +25,9 @@ module AskChatgpt
     end
 
     def speak
+      puts "Voice input is not enabled (docs: https://github.com/railsjazz/ask_chatgpt)" unless AskChatGPT.voice_enabled
+      puts "Audio device ID is not configured (docs: https://github.com/railsjazz/ask_chatgpt)" unless AskChatGPT.audio_device_id
+
       AskChatgpt::VoiceFlow::Voice.new.run
     end
     alias_method :s, :speak
