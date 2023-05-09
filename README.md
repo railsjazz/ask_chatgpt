@@ -299,6 +299,7 @@ end
 - when voice is used add support for payloads, e.g. `gpt.with_payload(json).speak` (and it will send payload with my question)
 - refactor voice input code :) as first version it's fine
 - can we discover audio device ID?
+- use tempfile for audio, instead of output.wav
 
 ## Contributing
 
