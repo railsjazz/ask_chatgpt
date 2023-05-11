@@ -5,6 +5,8 @@
 
 AI-Powered Assistant Gem right in your Rails console.
 
+NEW UPDATE: Voice input using your microphone, demo: https://youtu.be/uBR0wnQvKao
+
 ![AskChatGPT](docs/interactive.gif)
 
 A Gem that leverages the power of AI to make your development experience more efficient and enjoyable. With this gem, you can streamline your coding process, effortlessly refactor and improve your code, and even generate tests on the fly.
