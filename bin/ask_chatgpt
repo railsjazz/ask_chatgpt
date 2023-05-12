@@ -21,6 +21,7 @@ parser = OptionParser.new do |opts|
 
     Examples:
       ask_chatgpt -q "How to parse JSON file in Ruby?"
+      ask_chatgpt -m gpt-4 -q "How to parse JSON file in Ruby?"
       ask_chatgpt -f app/models/user.rb -q "find a bug in this Rails model"
       ask_chatgpt -f app/models/user.rb -q "create RSpec spec for this model"
       ask_chatgpt -f test/dummy/Gemfile -q "sort Ruby gems alphabetically"
@@ -42,6 +43,10 @@ parser = OptionParser.new do |opts|
     options[:file_path] = file
   end
 
+  opts.on("-m", "--model MODEL", String, "Specify the ChatGPT model. Uses \"gpt-3.5-turbo\" by default") do |model|
+    options[:model] = model
+  end
+
   opts.on("-d", "--debug", "Output request/response") do |debug|
     options[:debug] = true
   end
@@ -55,6 +60,8 @@ end
 parser.parse!
 
 AskChatGPT.debug = !!options[:debug]
+
+AskChatGPT.model = options[:model] if options[:model].present?
 
 options[:prompt] = ARGV.join(" ") if options[:prompt].blank?
 
