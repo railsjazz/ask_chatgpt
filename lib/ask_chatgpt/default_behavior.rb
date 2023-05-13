@@ -1,6 +1,6 @@
 module AskChatgpt
   module DefaultBehavior
-    DEFAULT_PROMPTS = [:improve, :refactor, :question, :find_bug, :code_review, :rspec_test, :unit_test, :explain]
+    DEFAULT_PROMPTS = [:improve, :refactor, :question, :with_code, :find_bug, :code_review, :rspec_test, :unit_test, :explain]
 
     def with_model(*models)
       self.tap do
@@ -22,6 +22,7 @@ module AskChatgpt
     alias :how :question
     alias :find :question
     alias :review :code_review
+    alias :with_class :with_code
 
     def add_prompt(prompt)
       scope << prompt
