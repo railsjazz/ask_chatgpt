@@ -20,6 +20,8 @@ Go to Rails console and run:
 ```ruby
   gpt.ask("how to get max age of user with projects from Ukraine").with_model(User, Project, Country)
   gpt.ask("convert json to xml")
+  gpt.with_code(User, Project).ask "make it better" # with_class alias for with_code
+  gpt.with_class(User).ask "make it better"
   gpt.payload(json).ask("extract emails from json")
   gpt.refactor("User.get_report")
   gpt.improve("User.get_report")
@@ -263,6 +265,8 @@ How to use:
   ask_chatgpt -f app/models/user.rb -q "find a bug in this Rails model"
   ask_chatgpt -f app/models/user.rb -q "create RSpec spec for this model"
   ask_chatgpt -f test/dummy/Gemfile -q "sort Ruby gems alphabetically"
+  ask_chatgpt -m 3.5 -q "How to parse JSON file in Ruby?"
+  ask_chatgpt -m 4 -q "Why Ruby is the best language?"
 ```
 
 ## Streaming (async vs sync mode)
@@ -302,6 +306,7 @@ end
 - refactor voice input code :) as first version it's fine
 - can we discover audio device ID?
 - use tempfile for audio, instead of output.wav
+- handle case when empty response is returned in CLI (when for example non-existing model is specified)
 
 ## Contributing
 

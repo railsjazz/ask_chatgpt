@@ -27,6 +27,8 @@ parser = OptionParser.new do |opts|
       ask_chatgpt -f test/dummy/Gemfile -q "sort Ruby gems alphabetically"
       ask_chatgpt -s 1"
 
+    To specify model you can use shorter version: -m 4, -m 4.0, -m 3.5.
+
     Version: #{AskChatGPT::VERSION}
 
   USAGE
@@ -61,7 +63,19 @@ parser.parse!
 
 AskChatGPT.debug = !!options[:debug]
 
-AskChatGPT.model = options[:model] if options[:model].present?
+if options[:model].present?
+  model = options[:model].to_s
+  disctionary = {
+    "4" => "gpt-4",
+    "4.0" => "gpt-4",
+    "40" => "gpt-4",
+    "3.5t" => "gpt-3.5-turbo",
+    "3.5" => "gpt-3.5-turbo",
+    "35" => "gpt-3.5-turbo",
+  }
+  model = disctionary[model.downcase] || model
+  AskChatGPT.model = model
+end
 
 options[:prompt] = ARGV.join(" ") if options[:prompt].blank?
 

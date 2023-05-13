@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    ask_chatgpt (0.4.0)
+    ask_chatgpt (0.5.0)
       io-console
       irb (>= 1.4.3)
       rails
