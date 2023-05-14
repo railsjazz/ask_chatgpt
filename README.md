@@ -20,7 +20,7 @@ Go to Rails console and run:
 ```ruby
   gpt.ask("how to get max age of user with projects from Ukraine").with_model(User, Project, Country)
   gpt.ask("convert json to xml")
-  gpt.with_code(User, Project).ask "make it better" # with_class alias for with_code
+  gpt.with_code("User.get_report", Project).ask "make it better" # with_class alias for with_code
   gpt.with_class(User).ask "make it better"
   gpt.payload(json).ask("extract emails from json")
   gpt.refactor("User.get_report")
