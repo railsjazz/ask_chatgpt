@@ -269,6 +269,17 @@ How to use:
   ask_chatgpt -m 4 -q "Why Ruby is the best language?"
 ```
 
+You can also create an alias "a" or "q" for example:
+
+Edit file: `nano ~/.bash_profile`
+
+```bash
+alias a='ask_chatgpt'
+alias q='ask_chatgpt'
+```
+
+and now you can use `q "how to unzip file with Ruby"`
+
 ## Streaming (async vs sync mode)
 
 Control the mode from a console. Or, from the initializer, using `config.mode = :async` (or sync).
