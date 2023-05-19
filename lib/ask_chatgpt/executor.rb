@@ -127,11 +127,25 @@ module AskChatgpt
 
     def executor_parameters
       @executor_parameters ||= {
-        model: AskChatGPT.model,
-        temperature: AskChatGPT.temperature,
-        max_tokens: AskChatGPT.max_tokens,
+        model: model,
+        temperature: temperature,
+        max_tokens: max_tokens,
         messages: scope.map { |e| { role: "user", content: e.content } }.reject { |e| e[:content].blank? },
       }.reject { |_, v| v.blank? }
+    end
+
+    def temperature
+      # see RandomFact class for example
+      new_temperature = scope.map { |e| e.class.const_get("TEMPERATURE") rescue nil }.compact.first
+      new_temperature.presence || AskChatGPT.temperature
+    end
+
+    def model
+      AskChatGPT.model
+    end
+
+    def max_tokens
+      AskChatGPT.max_tokens
     end
   end
 end
