@@ -292,6 +292,8 @@ Control the mode from a console. Or, from the initializer, using `config.mode = 
 
 ## Random Tips
 
+![AskChatGPT](docs/random_facts.png)
+
 Surprise yourself with random facts and useful tips. To use just call `gpt.random` (or `gpt.tip`, `gpt.random_tip`).
 
 By default it's using Ruby/Rails topics (see `RandomTip` class).
