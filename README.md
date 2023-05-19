@@ -262,6 +262,7 @@ How to use:
 
 ```
   ask_chatgpt -q "How to parse JSON file in Ruby?"
+  ask_chatgpt -t 0.7 -q "How to parse JSON file in Ruby?"
   ask_chatgpt -f app/models/user.rb -q "find a bug in this Rails model"
   ask_chatgpt -f app/models/user.rb -q "create RSpec spec for this model"
   ask_chatgpt -f test/dummy/Gemfile -q "sort Ruby gems alphabetically"
@@ -287,6 +288,21 @@ Control the mode from a console. Or, from the initializer, using `config.mode = 
 ```ruby
   gpt.async!
   gpt.sync!
+```
+
+## Random Tips
+
+Surprise yourself with random facts and useful tips. To use just call `gpt.random` (or `gpt.tip`, `gpt.random_tip`).
+
+By default it's using Ruby/Rails topics (see `RandomTip` class).
+
+But you can also use other topics, e.g.:
+
+```ruby
+  gpt.tip
+  gpt.tip("active record")
+  gpt.tip("sidekiq")
+  gpt.tip("security")
 ```
 
 ## Markdown
