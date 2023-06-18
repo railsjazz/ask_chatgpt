@@ -1,3 +1,9 @@
+- 0.6.1
+  - minor update to CLI tool (better inclusion of activesupport)
+
+... see "releases" for more details
+
+
 - 0.3.1
   - stability improvements (do not print message two times)
   - fix for show_source when in the app user pry-rails gem
