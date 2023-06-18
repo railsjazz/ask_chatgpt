@@ -11,6 +11,8 @@ require "tty-spinner"
 require "tty-cursor"
 require "irb"
 
+require "active_support/all"
+
 require_relative "ask_chatgpt/console"
 require_relative "ask_chatgpt/executor"
 require_relative "ask_chatgpt/helpers"
