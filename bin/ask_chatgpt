@@ -1,7 +1,6 @@
 #!/usr/bin/env ruby
 
 require 'optparse'
-require 'active_support'
 require 'irb'
 
 require_relative "../lib/ask_chatgpt"
