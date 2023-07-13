@@ -343,6 +343,9 @@ We are welcoming you to propose new prompts or adjust existing ones!
 
 To start just clone this repo. Run bundle, and go to `cd test/dummy/`. Start `rails c` and test your prompts.
 
+[<img src="https://opensource-heroes.com/svg/embed/railsjazz/ask_chatgpt"
+/>](https://opensource-heroes.com/svg/embed/railsjazz/ask_chatgpt)
+
 ## License
 
 The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
