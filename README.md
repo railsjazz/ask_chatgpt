@@ -1,7 +1,8 @@
 # Ask ChatGPT
 
 [![RailsJazz](https://github.com/igorkasyanchuk/rails_time_travel/blob/main/docs/my_other.svg?raw=true)](https://www.railsjazz.com)
-[![Listed on OpenSource-Heroes.com](https://opensource-heroes.com/badge-v1.svg)](https://opensource-heroes.com/o/railsjazz)
+
+[!["Buy Me A Coffee"](https://github.com/igorkasyanchuk/get-smart/blob/main/docs/snapshot-bmc-button-small.png?raw=true)](https://buymeacoffee.com/igorkasyanchuk)
 
 AI-Powered Assistant Gem right in your Rails console.
 
@@ -343,12 +344,11 @@ We are welcoming you to propose new prompts or adjust existing ones!
 
 To start just clone this repo. Run bundle, and go to `cd test/dummy/`. Start `rails c` and test your prompts.
 
-[<img src="https://opensource-heroes.com/svg/embed/railsjazz/ask_chatgpt"
-/>](https://opensource-heroes.com/svg/embed/railsjazz/ask_chatgpt)
-
 ## License
 
 The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
 
 [<img src="https://github.com/igorkasyanchuk/rails_time_travel/blob/main/docs/more_gems.png?raw=true"
 />](https://www.railsjazz.com/?utm_source=github&utm_medium=bottom&utm_campaign=ask_chatgpt)
+
+[!["Buy Me A Coffee"](https://github.com/igorkasyanchuk/get-smart/blob/main/docs/snapshot-bmc-button.png?raw=true)](https://buymeacoffee.com/igorkasyanchuk)
