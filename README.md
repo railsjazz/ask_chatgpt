@@ -160,9 +160,9 @@ Example with `nano ~/.bash_profile`:
 export OPENAI_API_KEY=key
 ```
 
-BUT make sure it won't be committed to the Github. Is must be private.
+BUT make sure it won't be committed to Github, it must be private.
 
-You can define you own prompts and use them using `.register_prompt`. For example:
+You can define your own prompts and use them using `.register_prompt`. For example:
 
 ```ruby
   config.register_prompt :extract_email do |arg|
